@@ -30,9 +30,10 @@ public class Main implements ApplicationListener {
     float dropTimer;
     Rectangle bucketRectangle;
     Rectangle dropRectangle;
-
+    //create() — вызывается один раз при создании приложения.
     @Override
     public void create() {
+    	//Это позволяет загрузить ресурсы в память после запуска
         backgroundTexture = new Texture("background.png");
         bucketTexture = new Texture("bucket.png");
         dropTexture = new Texture("drop.png");
@@ -50,12 +51,12 @@ public class Main implements ApplicationListener {
         music.setVolume(.5f);
         music.play();
     }
-
+  //Вызывается один раз сразу после метода create()
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
     }
-
+//render() выполняется 60 раз в секунду 
     @Override
     public void render() {
         input();
