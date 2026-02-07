@@ -15,8 +15,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-
+//набор методов, которые класс должен реализоват
 public class Main implements ApplicationListener {
+	//картинки звуки квадрат картинки обьекты 
     Texture backgroundTexture;
     Texture bucketTexture;
     Texture dropTexture;
@@ -40,7 +41,7 @@ public class Main implements ApplicationListener {
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.mp3"));
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         spriteBatch = new SpriteBatch();
-        viewport = new FitViewport(8, 5);
+        viewport = new FitViewport(9, 7);
         bucketSprite = new Sprite(bucketTexture);
         bucketSprite.setSize(1, 1);
         touchPos = new Vector2();
@@ -51,7 +52,7 @@ public class Main implements ApplicationListener {
         music.setVolume(.5f);
         music.play();
     }
-  //Вызывается один раз сразу после метода create()
+  //Вызывается один раз сразу после метода create() размер фоновой  картинки 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
@@ -65,15 +66,17 @@ public class Main implements ApplicationListener {
     }
 
     private void input() {
+    	//скорость передвижения корзины 
         float speed = 4f;
         float delta = Gdx.graphics.getDeltaTime();
-
+  //если нажата кнопка то это 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        	//товызывается токойто спрайт с такойто скоростью по горизонтале 
             bucketSprite.translateX(speed * delta);
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             bucketSprite.translateX(-speed * delta);
         }
-
+ //мышка
         if (Gdx.input.isTouched()) {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY());
             viewport.unproject(touchPos);
@@ -82,14 +85,17 @@ public class Main implements ApplicationListener {
     }
 
     private void logic() {
+    	//получить ширену высоту фона 
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
+        ////получить ширену высоту ведра
         float bucketWidth = bucketSprite.getWidth();
         float bucketHeight = bucketSprite.getHeight();
-
+        //чтобы ведро не смещалось за края 
         bucketSprite.setX(MathUtils.clamp(bucketSprite.getX(), 0, worldWidth - bucketWidth));
-
+     //получить текущую дельту
         float delta = Gdx.graphics.getDeltaTime();
+        //размер ведра и его позицыя переводим в квадрат 
         bucketRectangle.set(bucketSprite.getX(), bucketSprite.getY(), bucketWidth, bucketHeight);
 
         for (int i = dropSprites.size - 1; i >= 0; i--) {
